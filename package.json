@@ -1,10 +1,10 @@
 {
-  "name": "@tillhub/vue-search-filter",
+  "name": "vue-search-filter",
   "version": "1.10.0",
   "description": "Search input field with dropdown for filters",
   "author": "",
   "license": "MIT",
-  "repository": "tillhub/vue-search-filter",
+  "repository": "vue-search-filter",
   "private": false,
   "main": "./dist/vue-search-filter.common.js",
   "files": [
