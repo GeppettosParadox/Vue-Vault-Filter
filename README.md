@@ -91,6 +91,4 @@ One named slot it provided: "dropwdown-content". It is highly advised to refer t
 | addTag | function | ({ name, value, label }) => {}                                                                                 | This method communicates the changes in the slot children to the parent.<br>It adds tags to the parent input field.E.g. it can be called on every change in the child.<br>The method expects to be called with an object with at least the "name" prop.<br>If "label" is falsey, it will default to "value". |
 
 
-## License
 
-MIT © [qtotuan](https://github.com/qtotuan)
