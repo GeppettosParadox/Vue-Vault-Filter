@@ -1,3 +1,25 @@
+# Vue Search Filter
+
+A reusable Vue 2 search/filter component built around a tag-based filtering pattern. The component supports configurable dropdown content, scoped slots, localization, event-driven state updates, and integration with Element UI.
+
+This is an older Vue 2 project, so I treat it as historical work rather than a current framework recommendation. What I still like about it is the component-design problem it solves: creating a reusable interface that can support different filter controls without being tied to one screen or workflow.
+
+## What this project demonstrates
+
+- Reusable Vue component design
+- Props, events, scoped slots, and `v-model` integration
+- Parent/child state synchronization
+- Configurable submit/reset/click-away behavior
+- English/German localization support
+- Storybook-driven component examples
+- Library packaging with Vue CLI
+- Release workflow using Semantic Release and Commitizen
+- Linting and CI tooling
+
+## Stack
+
+Vue 2 · Element UI · Storybook · Vue CLI · ESLint · Semantic Release · Commitizen · CircleCI
+
 ## Install
 
 ```bash
@@ -6,9 +28,9 @@ npm install --save @tillhub/vue-search-filter
 
 ## Usage
 
-Please see src/stories folder for complete code example. Note, that the css has to be imported separately. This library assumes that element-ui is being used by the caller.
+Please see `src/stories` for a complete example. The component styles need to be imported separately, and this version assumes Element UI is available in the consuming application.
 
-To see the examples in action:
+To run the examples locally:
 
 ```bash
 npm run storybook
@@ -57,38 +79,32 @@ export default {
     }
   }
 }
-
 </script>
 ```
 
-### Attributes
+## Attributes
 
-| Attribute        | Type   | Required | Example              | Default  | Description                                                         |
-|------------------|--------|----------|----------------------|----------|---------------------------------------------------------------------|
-| width            | number | no       | 500                  | 460      | sets fixed width of component in pixels, minimum is 350             |
-| locale           | string | no       | "de"                 | "en"     | Currently only German and English is supported. Only 'de' and 'en ' |
-| inputPlaceholder | string | no       | "Search in products" | "Search" | Sets the placeholder text in the input field                        |
-| searchButtonText | string | no       | "Submit"             | "Search" | Sets a custom text in the blue submitting button                    |
-| resetButtonText  | string | no       | "Reset"              | "Cancel" | Sets a custom text in the reset button                              |
+| Attribute | Type | Required | Example | Default | Description |
+|---|---|---|---|---|---|
+| width | number | no | 500 | 460 | Sets fixed width of component in pixels; minimum is 350 |
+| locale | string | no | `de` | `en` | Supported locales are German and English |
+| inputPlaceholder | string | no | `Search in products` | `Search` | Sets the input placeholder |
+| searchButtonText | string | no | `Submit` | `Search` | Sets custom submit-button text |
+| resetButtonText | string | no | `Reset` | `Cancel` | Sets custom reset-button text |
 
+## Events
 
-### Events
+| Event | Description | Params |
+|---|---|---|
+| submit | Triggered when the user submits the search | filters |
+| reset | Triggered when the filter is reset | -- |
+| close-dropdown | Triggered when the dropdown closes | -- |
 
-| Event           | Description                                         | Params  |
-|-----------------|-----------------------------------------------------|---------|
-| submit          | triggers when the user clicks on "search" button    | filters |
-| reset           | triggers when the user clicks on the "reset" button | --      |
-| close-dropwdown | triggers when the user closes the dropwdown         | --      |
+## Scoped slot
 
+The component exposes a `dropdown-content` scoped slot so consuming code can supply its own filter controls. The slot receives the current input state and an `addTag` function, allowing child filters to communicate changes back to the parent component without hard-coding specific filter types into the library.
 
-### Slot
-
-One named slot it provided: "dropwdown-content". It is highly advised to refer to the example folder to see how this slot is used. Understanding the parent-child communication is crucial as the dropdown content and input content are closely linked.
-
-| Name   | Type     | Example                                                                                                        | Description                                                                                                                                                                                                                                                                                                  |
-|--------|----------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| input  | object   | { key1: { label: "product name", value: "product uuid"}, key2: { label: "branch name", value: "branch uuid"} } | this is an object that depicts the current state of the tags in the input field,<br> on every change they are passed to the slot so the consumer can update the slot children accordingly.<br> The key name is determined by the user, when it is being passed in the "addTag" method (see below).           |
-| addTag | function | ({ name, value, label }) => {}                                                                                 | This method communicates the changes in the slot children to the parent.<br>It adds tags to the parent input field.E.g. it can be called on every change in the child.<br>The method expects to be called with an object with at least the "name" prop.<br>If "label" is falsey, it will default to "value". |
-
-
-
+| Name | Type | Description |
+|---|---|---|
+| input | object | Current filter/tag state exposed to slot content |
+| addTag | function | Adds or replaces a filter tag in the parent component |
